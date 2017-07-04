@@ -9,7 +9,6 @@ import com.linus.security.spring3.Router;
 import com.sun.istack.internal.logging.Logger;
 
 @Controller
-@RequestMapping(value="/hello")
 public class MainController {
 	Logger logger = Logger.getLogger(MainController.class);
 
@@ -17,6 +16,7 @@ public class MainController {
 	public ModelAndView handleRequest() {
  		ModelAndView model = new ModelAndView();
  		logger.info("Home Page");
+ 		model.addObject("greeting", "hello");
  		model.setViewName(Router.home);
 		return model;
 	} 
