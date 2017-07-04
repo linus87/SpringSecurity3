@@ -20,11 +20,6 @@ http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd">
 		<property name="suffix" value=".jsp" />
 	</bean>
 
-	<bean name="themeSource"
-		class="org.springframework.ui.context.support.ResourceBundleThemeSource">
-		<property name="basenamePrefix" value="themes." />
-	</bean>
-
 	<bean id="localeResolver"
 		class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
 		<property name="defaultLocale" value="en_US" />
