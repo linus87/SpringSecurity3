@@ -39,10 +39,21 @@
 		<url-pattern>/*</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>jsp</servlet-name>
+		<servlet-class>org.apache.jasper.servlet.JspServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>jsp</servlet-name>
+		<url-pattern>/WEB-INF/views/*</url-pattern>
+	</servlet-mapping>
+
+
 	<welcome-file-list>
 		<welcome-file>login.jsp</welcome-file>
 	</welcome-file-list>
-	
+
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
