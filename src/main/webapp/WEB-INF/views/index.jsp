@@ -5,6 +5,6 @@
 <body>
 <h2>Hello World!</h2>
 ${ greeting }
-<a href="/j_spring_security_logout">Log Out</a>
+<a href="j_spring_security_logout">Log Out</a>
 </body>
 </html>

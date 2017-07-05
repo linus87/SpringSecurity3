@@ -6,18 +6,16 @@
 	<http pattern="/login.jsp*" security="none" />
 	
 	<http auto-config="true">
-		<intercept-url pattern="/**" access="ROLE_USER"/>
+		<intercept-url pattern="/**" access="ROLE_AM"/>
+		<remember-me key="token"/>
 	</http>
 
 	<authentication-manager>
-		<authentication-provider>
-			<user-service>
-				<user name="admin" password="password" authorities="ROLE_USER, ROLE_ADMIN" />
-				<user name="user" password="password" authorities="ROLE_USER" />
-			</user-service>
-		</authentication-provider>
+		<authentication-provider user-service-ref="userDetailsServcie" />
 	</authentication-manager>
-
+	
+	<b:bean id="userDetailsServcie" class="com.linus.security.spring3.security.MyUserDetailsService" />
+	
 	<!-- <global-method-security pre-post-annotations="enabled" /> <http pattern="/static/**" 
 		security="none" /> <http pattern="/loggedout.jsp" security="none" /> <http> 
 		<intercept-url pattern="/secure/extreme/**" access="hasAuthority('supervisor')" 
@@ -48,12 +46,5 @@
 	<!-- <b:bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" 
 		/> -->
 
-	<!-- Usernames/Passwords are rod/koala dianne/emu scott/wombat peter/opal -->
-	<!-- <authentication-manager> <authentication-provider> <password-encoder 
-		ref="encoder" /> <user-service> <user name="rod" password="$2a$10$75pBjapg4Nl8Pzd.3JRnUe7PDJmk9qBGwNEJDAlA3V.dEJxcDKn5O" 
-		authorities="supervisor, user, teller" /> <user name="dianne" password="$2a$04$bCMEyxrdF/7sgfUiUJ6Ose2vh9DAMaVBldS1Bw2fhi1jgutZrr9zm" 
-		authorities="user,teller" /> <user name="scott" password="$2a$06$eChwvzAu3TSexnC3ynw4LOSw1qiEbtNItNeYv5uI40w1i3paoSfLu" 
-		authorities="user" /> <user name="peter" password="$2a$04$8.H8bCMROLF4CIgd7IpeQ.tcBXLP5w8iplO0n.kCIkISwrIgX28Ii" 
-		authorities="user" /> </user-service> </authentication-provider> </authentication-manager> -->
 
 </b:beans>
