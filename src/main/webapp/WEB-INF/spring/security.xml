@@ -2,20 +2,20 @@
 	xmlns:b="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 						http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
-						
+
 	<http pattern="/login.jsp*" security="none" />
-	
+
 	<http auto-config="true">
-		<intercept-url pattern="/**" access="ROLE_AM"/>
-		<remember-me key="token"/>
+		<intercept-url pattern="/**" access="ROLE_AM" />
+		<remember-me key="token" />
 	</http>
 
 	<authentication-manager>
 		<authentication-provider user-service-ref="userDetailsServcie" />
 	</authentication-manager>
-	
-	<b:bean id="userDetailsServcie" class="com.linus.security.spring3.security.MyUserDetailsService" />
-	
+
+	<b:bean id="userDetailsServcie"	class="com.linus.security.spring3.security.MyUserDetailsService" />
+
 	<!-- <global-method-security pre-post-annotations="enabled" /> <http pattern="/static/**" 
 		security="none" /> <http pattern="/loggedout.jsp" security="none" /> <http> 
 		<intercept-url pattern="/secure/extreme/**" access="hasAuthority('supervisor')" 
@@ -33,11 +33,12 @@
 		formLoginFilter, filterSecurityInterceptor" /> </filter-chain-map> </b:bean> 
 		<b:bean id="securityContextPersistenceFilter" class="org.springframework.security.web.context.SecurityContextPersistenceFilter" 
 		/> <b:bean id="filterSecurityInterceptor" class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor"> 
-		<b:property name="authenticationManager" ref="authenticationManager" /> <b:property  login-page
-		name="accessDecisionManager" ref="accessDecisionManager" /> <b:property name="securityMetadataSource"> 
-		<filter-security-metadata-source> <intercept-url pattern="/secure/super/**" 
-		access="ROLE_WE_DONT_HAVE" /> <intercept-url pattern="/secure/**" access="ROLE_SUPERVISOR,ROLE_TELLER" 
-		/> </filter-security-metadata-source> </b:property> </b:bean> -->
+		<b:property name="authenticationManager" ref="authenticationManager" /> <b:property 
+		login-page name="accessDecisionManager" ref="accessDecisionManager" /> <b:property 
+		name="securityMetadataSource"> <filter-security-metadata-source> <intercept-url 
+		pattern="/secure/super/**" access="ROLE_WE_DONT_HAVE" /> <intercept-url pattern="/secure/**" 
+		access="ROLE_SUPERVISOR,ROLE_TELLER" /> </filter-security-metadata-source> 
+		</b:property> </b:bean> -->
 
 	<!-- <b:bean id="exceptionTranslationFilter" class="org.springframework.security.web.access.ExceptionTranslationFilter"> 
 		<b:property name="authenticationEntryPoint" ref="authenticationEntryPoint" 

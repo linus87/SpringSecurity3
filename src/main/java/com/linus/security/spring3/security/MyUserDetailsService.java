@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.GrantedAuthorityImpl;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,16 +19,14 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 public class MyUserDetailsService implements UserDetailsService {
 	private Map<String, UserDetails> users = new HashMap<String, UserDetails>();
 	
-	
-	@SuppressWarnings("deprecation")
 	public MyUserDetailsService() {
 		Collection<GrantedAuthority> amGrantedAuthorities = new ArrayList<GrantedAuthority>();
 		Collection<GrantedAuthority> adminGrantedAuthorities = new ArrayList<GrantedAuthority>();
 		Collection<GrantedAuthority> operatorGrantedAuthorities = new ArrayList<GrantedAuthority>();
 		
-		GrantedAuthority amAuthority = new GrantedAuthorityImpl("ROLE_AM");
-		GrantedAuthority operatorAuthority = new GrantedAuthorityImpl("ROLE_OPERATOR");
-		GrantedAuthority adminAuthority = new GrantedAuthorityImpl("ROLE_ADMIN");
+		GrantedAuthority amAuthority = new SimpleGrantedAuthority("ROLE_AM");
+		GrantedAuthority operatorAuthority = new SimpleGrantedAuthority("ROLE_OPERATOR");
+		GrantedAuthority adminAuthority = new SimpleGrantedAuthority("ROLE_ADMIN");
 		
 		amGrantedAuthorities.add(amAuthority);
 		
