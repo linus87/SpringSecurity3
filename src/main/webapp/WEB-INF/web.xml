@@ -22,6 +22,10 @@
 	<filter-mapping>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<url-pattern>/*</url-pattern>
+		<!-- below dispatchers must be set, because most of the requests are forwarded by controllers -->
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
 	</filter-mapping>
 
 	<servlet>
