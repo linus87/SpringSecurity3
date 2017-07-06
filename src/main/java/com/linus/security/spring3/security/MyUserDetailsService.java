@@ -49,7 +49,10 @@ public class MyUserDetailsService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-		return users.get(userName);
+		UserDetails user = users.get(userName);
+		if (user == null) throw new UsernameNotFoundException(userName);
+		
+		return user;
 	}
 	
 }
