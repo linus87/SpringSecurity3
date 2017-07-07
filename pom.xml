@@ -43,20 +43,15 @@
 			<version>3.1.3.RELEASE</version>
 		</dependency>
 		<dependency>
-            <groupId>com.ebay.soa.interface</groupId>
-            <artifactId>IAFServiceClient</artifactId>
-            <version>1.5.2-RELEASE</version>
-        </dependency>
-		<dependency>
 			<groupId>com.ebay.iaf.service.client</groupId>
 			<artifactId>IAFServiceStdClient</artifactId>
 			<version>0.0.4-RELEASE</version>
 		</dependency>
 		<dependency>
-            <groupId>com.ebay.raptor.core</groupId>
-            <artifactId>metadata-runtime-mp</artifactId>
-            <version>3.0.0-RELEASE</version>
-        </dependency>
+			<groupId>com.ebay.raptor.core</groupId>
+			<artifactId>metadata-runtime-mp</artifactId>
+			<version>3.0.0-RELEASE</version>
+		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -66,5 +61,14 @@
 	</dependencies>
 	<build>
 		<finalName>SpringSecurity3</finalName>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
 </project>
