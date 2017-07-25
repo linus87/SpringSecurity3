@@ -11,12 +11,12 @@
 		<remember-me key="token" />
 	</http>
 	
-	<b:bean id="iafAuthenticationProvider" class="com.linus.security.spring3.security.IAFAuthenticationProvider">
+	<b:bean id="usernamePasswordAuthenticationProvider" class="com.linus.security.spring3.security.UsernamePasswordAuthenticationProvider">
 		<b:property name="userDetailsService" ref="userDetailsServcie"></b:property>
 	</b:bean>
 
 	<authentication-manager erase-credentials="true">
-		<authentication-provider ref="iafAuthenticationProvider"></authentication-provider>
+		<authentication-provider ref="usernamePasswordAuthenticationProvider"></authentication-provider>
 	</authentication-manager>
 
 	<b:bean id="userDetailsServcie"	class="com.linus.security.spring3.security.MyUserDetailsService" />
