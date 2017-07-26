@@ -8,7 +8,7 @@
 	<http auto-config="true">
 		<!-- <custom-filter ref=""/> -->
 		<intercept-url pattern="/**" access="ROLE_AM" />
-		<remember-me key="token" />
+		<!-- <remember-me key="token" /> -->
 	</http>
 	
 	<b:bean id="usernamePasswordAuthenticationProvider" class="com.linus.security.spring3.security.UsernamePasswordAuthenticationProvider">

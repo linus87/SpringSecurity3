@@ -1,5 +1,8 @@
 package com.linus.security.spring3.security;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -13,12 +16,18 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  * @author lyan2
  */
 public class UsernamePasswordAuthenticationProvider implements AuthenticationProvider {
+	private Logger logger = Logger.getLogger(UsernamePasswordAuthenticationProvider.class.getName());
 	private UserDetailsService userDetailsService;
 
+	/**
+	 * 
+	 */
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+		logger.log(Level.INFO, String.format("UsernamePasswordAuthenticationProvider is authenticating user %s.", authentication.getName()));
+		
 		UserDetails user = userDetailsService.loadUserByUsername(authentication.getName());
 		
-		if (user != null) {
+		if (user != null && user.getPassword().equals(authentication.getCredentials())) {
 			return new UsernamePasswordAuthenticationToken(authentication.getName(), authentication.getCredentials(), user.getAuthorities());
 		}
 
