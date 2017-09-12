@@ -78,9 +78,9 @@ public class IAFTokenAuthenticationFilter extends GenericFilterBean {
 				
 				if (authResult.isAuthenticated()) {
 					if (principalCookie != null) {
-//						AMUserDetails u = (AMUserDetails)authResult.getDetails();
-//						u.setAgencyMode(true);
-//						u.setPrincipal(principalCookie.getValue());
+						DefaultUserDetails u = (DefaultUserDetails)authResult.getDetails();
+						u.setAgencyMode(true);
+						u.setPrincipal(principalCookie.getValue());
 					}
 				}
 				
