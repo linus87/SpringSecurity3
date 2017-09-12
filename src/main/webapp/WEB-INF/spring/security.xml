@@ -1,56 +1,56 @@
 <b:beans xmlns="http://www.springframework.org/schema/security"
 	xmlns:b="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
-						http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+						http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
 	<http pattern="/login.jsp*" security="none" />
 
-	<http auto-config="true">
-		<!-- <custom-filter ref=""/> -->
-		<intercept-url pattern="/**" access="ROLE_AM" />
-		<!-- <remember-me key="token" /> -->
+	<http pattern="/SpringSecurity3/login*" security="none" />
+	<http pattern="/SpringSecurity3/spring_security_login" security="none" />
+	<http pattern="/SpringSecurity3/assets/*" security="none" />
+	<http pattern="/SpringSecurity3/js/*" security="none" />
+	<http pattern="/SpringSecurity3/css/*" security="none" />
+	
+	<http auto-config="true" request-matcher="ant" access-denied-page="/SpringSecurity3/login" create-session="stateless">
+		<form-login login-page="/SpringSecurity3/login" authentication-success-handler-ref="authenticationSuccessHandler" authentication-failure-url="/SpringSecurity3/login" />
+		<custom-filter ref="iafTokenAuthenticationFilter" after="FORM_LOGIN_FILTER" />
+		<intercept-url pattern="/**" access="ROLE_AM,ROLE_OPERATOR,ROLE_ADMIN"/>
+		<logout success-handler-ref="logoutSuccessHandler"/>
 	</http>
+	
+	<b:bean id="logoutSuccessHandler" class="com.linus.security.spring3.security.AMLogoutSuccessHandler">
+		<b:property name="defaultTargetUrl" value="/SpringSecurity3/login"></b:property>
+		<b:property name="alwaysUseDefaultTargetUrl" value="true"></b:property>
+	</b:bean>
+	
+	<b:bean id="authenticationSuccessHandler" class="com.linus.security.spring3.security.AMAuthenticationSuccessHandler">
+		<b:property name="defaultTargetUrl" value="/SpringSecurity3/"></b:property>
+		<b:property name="alwaysUseDefaultTargetUrl" value="true"></b:property>
+	</b:bean>
+	
+	<b:bean id="iafTokenAuthenticationFilter" class="com.linus.security.spring3.security.IAFTokenAuthenticationFilter">
+		<b:property name="authenticationManager" ref="authenticationManager" />
+		<b:property name="iafTokenService" ref="iafTokenService"></b:property>
+	</b:bean>
+	
+	<b:bean id="userDetailsServcie"	class="com.linus.security.spring3.security.MyUserDetailsService" />
+	<b:bean id="iafTokenService"	class="com.linus.security.spring3.security.IAFTokenService" />
 	
 	<b:bean id="usernamePasswordAuthenticationProvider" class="com.linus.security.spring3.security.UsernamePasswordAuthenticationProvider">
 		<b:property name="userDetailsService" ref="userDetailsServcie"></b:property>
+		<b:property name="iafTokenService" ref="iafTokenService"></b:property>
+	</b:bean>
+	
+	<b:bean id="iafTokenAuthenticationProvider" class="com.linus.security.spring3.security.IAFTokenAuthenticationProvider">
+		<b:property name="userDetailsService" ref="userDetailsServcie"></b:property>
+		<b:property name="iafTokenService" ref="iafTokenService"></b:property>
 	</b:bean>
 
-	<authentication-manager erase-credentials="true">
+    <global-method-security pre-post-annotations="enabled"/> 
+    
+	<authentication-manager alias="authenticationManager">
 		<authentication-provider ref="usernamePasswordAuthenticationProvider"></authentication-provider>
+		<authentication-provider ref="iafTokenAuthenticationProvider"></authentication-provider>
 	</authentication-manager>
-
-	<b:bean id="userDetailsServcie"	class="com.linus.security.spring3.security.MyUserDetailsService" />
-
-	<!-- <global-method-security pre-post-annotations="enabled" /> <http pattern="/static/**" 
-		security="none" /> <http pattern="/loggedout.jsp" security="none" /> <http> 
-		<intercept-url pattern="/secure/extreme/**" access="hasAuthority('supervisor')" 
-		/> <intercept-url pattern="/secure/**" access="authenticated" /> Allow all 
-		other requests. In a real application you should adopt a whitelisting approach 
-		where access is not allowed by default <intercept-url pattern="/**" access="permitAll" 
-		/> <form-login /> <logout logout-success-url="/loggedout.jsp" delete-cookies="JSESSIONID" 
-		/> <remember-me /> Uncomment to enable X509 client authentication support 
-		<x509 /> Uncomment to limit the number of sessions a user can have <session-management 
-		invalid-session-url="/timeout.jsp"> <concurrency-control max-sessions="1" 
-		error-if-maximum-exceeded="true" /> </session-management> </http> -->
-
-	<!-- <b:bean id="filterChainProxy" class="org.springframework.security.web.FilterChainProxy"> 
-		<filter-chain-map> <filter-chain pattern="/**" filters=" securityContextPersistenceFilterWithASCTrue, 
-		formLoginFilter, filterSecurityInterceptor" /> </filter-chain-map> </b:bean> 
-		<b:bean id="securityContextPersistenceFilter" class="org.springframework.security.web.context.SecurityContextPersistenceFilter" 
-		/> <b:bean id="filterSecurityInterceptor" class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor"> 
-		<b:property name="authenticationManager" ref="authenticationManager" /> <b:property 
-		login-page name="accessDecisionManager" ref="accessDecisionManager" /> <b:property 
-		name="securityMetadataSource"> <filter-security-metadata-source> <intercept-url 
-		pattern="/secure/super/**" access="ROLE_WE_DONT_HAVE" /> <intercept-url pattern="/secure/**" 
-		access="ROLE_SUPERVISOR,ROLE_TELLER" /> </filter-security-metadata-source> 
-		</b:property> </b:bean> -->
-
-	<!-- <b:bean id="exceptionTranslationFilter" class="org.springframework.security.web.access.ExceptionTranslationFilter"> 
-		<b:property name="authenticationEntryPoint" ref="authenticationEntryPoint" 
-		/> <b:property name="accessDeniedHandler" ref="accessDeniedHandler" /> </b:bean> -->
-
-	<!-- <b:bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" 
-		/> -->
-
 
 </b:beans>
