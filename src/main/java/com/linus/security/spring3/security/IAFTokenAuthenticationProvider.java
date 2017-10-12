@@ -17,24 +17,19 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 public class IAFTokenAuthenticationProvider implements AuthenticationProvider {
 	private Logger logger = Logger.getLogger(IAFTokenAuthenticationProvider.class.getName());
 	private UserDetailsService userDetailsService;
-	private IAFTokenService iafTokenService;
 
 	@Override
 	public Authentication authenticate(Authentication authentication)
 			throws AuthenticationException {
 		boolean authenticated = false;
 		
-		// validate iaf token
-		AuthenticateTokenResponse response = iafTokenService.authenticateToken(((IAFAuthenticationToken)authentication).getIafToken());
-		if (response != null && response.getAck() == AckValue.SUCCESS) {
-			authenticated = true;
-		}
+		authenticated = true;
 		
 		if (authenticated) {
 			try {
 				// check if corp user is in our user list.
 				UserDetails user = userDetailsService.loadUserByUsername(authentication.getName());
-				IAFAuthenticationToken authResult = new IAFAuthenticationToken(authentication.getName(), ((IAFAuthenticationToken)authentication).getIafToken(), user.getAuthorities());
+				IAFAuthenticationToken authResult = new IAFAuthenticationToken(authentication.getName(), null, user.getAuthorities());
 				authResult.setDetails(user);
 				return authResult;
 			} catch (UsernameNotFoundException e) {
@@ -50,14 +45,6 @@ public class IAFTokenAuthenticationProvider implements AuthenticationProvider {
 	@Override
 	public boolean supports(Class<?> authentication) {
 		return IAFAuthenticationToken.class.isAssignableFrom(authentication);
-	}
-
-	public IAFTokenService getIafTokenService() {
-		return iafTokenService;
-	}
-
-	public void setIafTokenService(IAFTokenService iafTokenService) {
-		this.iafTokenService = iafTokenService;
 	}
 
 	public UserDetailsService getUserDetailsService() {

@@ -5,32 +5,30 @@
 
 	<http pattern="/login.jsp*" security="none" />
 
-	<http pattern="/SpringSecurity3/login*" security="none" />
-	<http pattern="/SpringSecurity3/spring_security_login" security="none" />
-	<http pattern="/SpringSecurity3/assets/*" security="none" />
-	<http pattern="/SpringSecurity3/js/*" security="none" />
-	<http pattern="/SpringSecurity3/css/*" security="none" />
+	<http pattern="/login*" security="none" />
+	<http pattern="/springsecurity3/assets/*" security="none" />
+	<http pattern="/springsecurity3/js/*" security="none" />
+	<http pattern="/springsecurity3/css/*" security="none" />
 	
-	<http auto-config="true" request-matcher="ant" access-denied-page="/SpringSecurity3/login" create-session="stateless">
-		<form-login login-page="/SpringSecurity3/login" authentication-success-handler-ref="authenticationSuccessHandler" authentication-failure-url="/SpringSecurity3/login" />
+	<http auto-config="true" request-matcher="ant" access-denied-page="/login" create-session="stateless">
+		<form-login login-page="/login" authentication-success-handler-ref="authenticationSuccessHandler" authentication-failure-url="/login" />
 		<custom-filter ref="iafTokenAuthenticationFilter" after="FORM_LOGIN_FILTER" />
 		<intercept-url pattern="/**" access="ROLE_AM,ROLE_OPERATOR,ROLE_ADMIN"/>
 		<logout success-handler-ref="logoutSuccessHandler"/>
 	</http>
 	
 	<b:bean id="logoutSuccessHandler" class="com.linus.security.spring3.security.AMLogoutSuccessHandler">
-		<b:property name="defaultTargetUrl" value="/SpringSecurity3/login"></b:property>
+		<b:property name="defaultTargetUrl" value="/login"></b:property>
 		<b:property name="alwaysUseDefaultTargetUrl" value="true"></b:property>
 	</b:bean>
 	
 	<b:bean id="authenticationSuccessHandler" class="com.linus.security.spring3.security.AMAuthenticationSuccessHandler">
-		<b:property name="defaultTargetUrl" value="/SpringSecurity3/"></b:property>
+		<b:property name="defaultTargetUrl" value="/"></b:property>
 		<b:property name="alwaysUseDefaultTargetUrl" value="true"></b:property>
 	</b:bean>
 	
 	<b:bean id="iafTokenAuthenticationFilter" class="com.linus.security.spring3.security.IAFTokenAuthenticationFilter">
 		<b:property name="authenticationManager" ref="authenticationManager" />
-		<b:property name="iafTokenService" ref="iafTokenService"></b:property>
 	</b:bean>
 	
 	<b:bean id="userDetailsServcie"	class="com.linus.security.spring3.security.MyUserDetailsService" />
@@ -43,7 +41,6 @@
 	
 	<b:bean id="iafTokenAuthenticationProvider" class="com.linus.security.spring3.security.IAFTokenAuthenticationProvider">
 		<b:property name="userDetailsService" ref="userDetailsServcie"></b:property>
-		<b:property name="iafTokenService" ref="iafTokenService"></b:property>
 	</b:bean>
 
     <global-method-security pre-post-annotations="enabled"/> 

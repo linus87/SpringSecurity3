@@ -20,16 +20,10 @@ public class AMLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler {
 			HttpServletResponse response, Authentication authentication)
 			throws IOException, ServletException {
 		
-		Cookie iafCookie = new Cookie(IAFTokenAuthenticationFilter.IAF_TOKEN_COOKIE_NAME, "");
 		Cookie userCookie = new Cookie(IAFTokenAuthenticationFilter.USER_COOKIE_NAME, "");
-		Cookie principalCookie = new Cookie(IAFTokenAuthenticationFilter.PRINCIPAL_COOKIE_NAME, "");
 		
-		iafCookie.setMaxAge(0);
 		userCookie.setMaxAge(0);
-		principalCookie.setMaxAge(0);
-		response.addCookie(iafCookie);
 		response.addCookie(userCookie);
-		response.addCookie(principalCookie);
 		
 		super.onLogoutSuccess(request, response, authentication);
 	}

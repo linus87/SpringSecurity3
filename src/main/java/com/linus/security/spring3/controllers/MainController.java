@@ -20,5 +20,14 @@ public class MainController {
  		model.addObject("greeting", "hello");
  		model.setViewName(Router.home);
 		return model;
-	} 
+	}
+	
+	@RequestMapping(value="/login", method=RequestMethod.GET)
+	public ModelAndView handleLoginRequest() {
+ 		ModelAndView model = new ModelAndView();
+ 		logger.info("Login Page");
+ 		model.addObject("greeting", "hello");
+ 		model.setViewName(Router.login);
+		return model;
+	}
 }
