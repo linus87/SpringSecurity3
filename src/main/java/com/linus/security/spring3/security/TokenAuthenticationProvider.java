@@ -14,8 +14,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
  * 
  * @author lyan2
  */
-public class IAFTokenAuthenticationProvider implements AuthenticationProvider {
-	private Logger logger = Logger.getLogger(IAFTokenAuthenticationProvider.class.getName());
+public class TokenAuthenticationProvider implements AuthenticationProvider {
+	private Logger logger = Logger.getLogger(TokenAuthenticationProvider.class.getName());
 	private UserDetailsService userDetailsService;
 
 	@Override
@@ -29,12 +29,12 @@ public class IAFTokenAuthenticationProvider implements AuthenticationProvider {
 			try {
 				// check if corp user is in our user list.
 				UserDetails user = userDetailsService.loadUserByUsername(authentication.getName());
-				IAFAuthenticationToken authResult = new IAFAuthenticationToken(authentication.getName(), null, user.getAuthorities());
+				AuthenticationToken authResult = new AuthenticationToken(authentication.getName(), null, user.getAuthorities());
 				authResult.setDetails(user);
 				return authResult;
 			} catch (UsernameNotFoundException e) {
 				logger.log(Level.SEVERE, String.format("A invalid user try to login amplaybok: %s" , authentication.getName()));
-				return new IAFAuthenticationToken(authentication.getName(), ((IAFAuthenticationToken)authentication).getIafToken());
+				return new AuthenticationToken(authentication.getName(), ((AuthenticationToken)authentication).getIafToken());
 			}		
 			
 		}
@@ -44,7 +44,7 @@ public class IAFTokenAuthenticationProvider implements AuthenticationProvider {
 
 	@Override
 	public boolean supports(Class<?> authentication) {
-		return IAFAuthenticationToken.class.isAssignableFrom(authentication);
+		return AuthenticationToken.class.isAssignableFrom(authentication);
 	}
 
 	public UserDetailsService getUserDetailsService() {

@@ -9,19 +9,19 @@ import org.springframework.security.core.GrantedAuthority;
  * IAF Authentication Token Holder.
  * @author lyan2
  */
-public class IAFAuthenticationToken extends AbstractAuthenticationToken {
+public class AuthenticationToken extends AbstractAuthenticationToken {
 	
 	private String iafToken;
 	private final Object principal;
 	
-	public IAFAuthenticationToken(Object principal, String iafToken) {
+	public AuthenticationToken(Object principal, String iafToken) {
 		super(null);
 		this.principal = principal;
 		this.iafToken = iafToken;
 		this.setAuthenticated(false);
 	}
 	
-	public IAFAuthenticationToken(Object principal, String iafToken, Collection<? extends GrantedAuthority> authorities) {
+	public AuthenticationToken(Object principal, String iafToken, Collection<? extends GrantedAuthority> authorities) {
 		super(authorities);
 		this.principal = principal;
 		this.iafToken = iafToken;

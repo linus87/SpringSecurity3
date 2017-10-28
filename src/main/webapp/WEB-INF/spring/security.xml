@@ -12,7 +12,7 @@
 	
 	<http auto-config="true" request-matcher="ant" access-denied-page="/login" create-session="stateless">
 		<form-login login-page="/login" authentication-success-handler-ref="authenticationSuccessHandler" authentication-failure-url="/login" />
-		<custom-filter ref="iafTokenAuthenticationFilter" after="FORM_LOGIN_FILTER" />
+		<custom-filter ref="tokenAuthenticationFilter" after="FORM_LOGIN_FILTER" />
 		<intercept-url pattern="/**" access="ROLE_AM,ROLE_OPERATOR,ROLE_ADMIN"/>
 		<logout success-handler-ref="logoutSuccessHandler"/>
 	</http>
@@ -27,19 +27,19 @@
 		<b:property name="alwaysUseDefaultTargetUrl" value="true"></b:property>
 	</b:bean>
 	
-	<b:bean id="iafTokenAuthenticationFilter" class="com.linus.security.spring3.security.IAFTokenAuthenticationFilter">
+	<b:bean id="tokenAuthenticationFilter" class="com.linus.security.spring3.security.TokenAuthenticationFilter">
 		<b:property name="authenticationManager" ref="authenticationManager" />
 	</b:bean>
 	
 	<b:bean id="userDetailsServcie"	class="com.linus.security.spring3.security.MyUserDetailsService" />
-	<b:bean id="iafTokenService"	class="com.linus.security.spring3.security.IAFTokenService" />
+	<b:bean id="tokenService"	class="com.linus.security.spring3.security.TokenService" />
 	
 	<b:bean id="usernamePasswordAuthenticationProvider" class="com.linus.security.spring3.security.UsernamePasswordAuthenticationProvider">
 		<b:property name="userDetailsService" ref="userDetailsServcie"></b:property>
-		<b:property name="iafTokenService" ref="iafTokenService"></b:property>
+		<b:property name="tokenService" ref="tokenService"></b:property>
 	</b:bean>
 	
-	<b:bean id="iafTokenAuthenticationProvider" class="com.linus.security.spring3.security.IAFTokenAuthenticationProvider">
+	<b:bean id="tokenAuthenticationProvider" class="com.linus.security.spring3.security.TokenAuthenticationProvider">
 		<b:property name="userDetailsService" ref="userDetailsServcie"></b:property>
 	</b:bean>
 
@@ -47,7 +47,7 @@
     
 	<authentication-manager alias="authenticationManager">
 		<authentication-provider ref="usernamePasswordAuthenticationProvider"></authentication-provider>
-		<authentication-provider ref="iafTokenAuthenticationProvider"></authentication-provider>
+		<authentication-provider ref="tokenAuthenticationProvider"></authentication-provider>
 	</authentication-manager>
 
 </b:beans>

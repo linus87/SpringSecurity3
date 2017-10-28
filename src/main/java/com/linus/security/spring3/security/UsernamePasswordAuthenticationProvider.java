@@ -18,7 +18,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 public class UsernamePasswordAuthenticationProvider implements AuthenticationProvider {
 	private Logger logger = Logger.getLogger(UsernamePasswordAuthenticationProvider.class.getName());
 	private UserDetailsService userDetailsService;
-	private IAFTokenService iafTokenService;
+	private TokenService tokenService;
 
 	/**
 	 * 
@@ -51,12 +51,12 @@ public class UsernamePasswordAuthenticationProvider implements AuthenticationPro
 		this.userDetailsService = userDetailsService;
 	}
 
-	public IAFTokenService getIafTokenService() {
-		return iafTokenService;
+	public TokenService getTokenService() {
+		return tokenService;
 	}
 
-	public void setIafTokenService(IAFTokenService iafTokenService) {
-		this.iafTokenService = iafTokenService;
+	public void setTokenService(TokenService tokenService) {
+		this.tokenService = tokenService;
 	}
 
 }

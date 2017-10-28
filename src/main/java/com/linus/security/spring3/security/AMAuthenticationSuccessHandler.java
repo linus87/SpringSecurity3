@@ -11,7 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 
 public class AMAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
-	private static String domain = ".ebay.com";
+//	private static String domain = ".ebay.com";
 	private static String path = "/";
 
 	/**
@@ -24,8 +24,8 @@ public class AMAuthenticationSuccessHandler extends SimpleUrlAuthenticationSucce
 		
 		if (authentication != null && authentication.isAuthenticated()) {
 			
-			Cookie userCookie = new Cookie(IAFTokenAuthenticationFilter.USER_COOKIE_NAME, (String)authentication.getPrincipal());
-			userCookie.setDomain(domain);
+			Cookie userCookie = new Cookie(TokenAuthenticationFilter.USER_COOKIE_NAME, (String)authentication.getPrincipal());
+//			userCookie.setDomain(domain);
 			userCookie.setPath(path);
 			response.addCookie(userCookie);
 		}

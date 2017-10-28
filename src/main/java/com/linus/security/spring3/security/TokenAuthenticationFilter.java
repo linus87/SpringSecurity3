@@ -20,10 +20,10 @@ import org.springframework.web.filter.GenericFilterBean;
  * Validate user IAF token.
  * @author lyan2
  */
-public class IAFTokenAuthenticationFilter extends GenericFilterBean {
+public class TokenAuthenticationFilter extends GenericFilterBean {
 
-	private Logger logger = Logger.getLogger(IAFTokenAuthenticationFilter.class.getName());
-	public static String USER_COOKIE_NAME = "amusr";
+	private Logger logger = Logger.getLogger(TokenAuthenticationFilter.class.getName());
+	public static String USER_COOKIE_NAME = "usr";
 	
 	private AuthenticationManager authenticationManager;
 	private UserDetailsService userDetailsService;
@@ -36,11 +36,11 @@ public class IAFTokenAuthenticationFilter extends GenericFilterBean {
 		this.userDetailsService = userDetailsService;
 	}
 
-	public IAFTokenAuthenticationFilter() {
+	public TokenAuthenticationFilter() {
 		super();
 	}
 
-	public IAFTokenAuthenticationFilter(AuthenticationManager authenticationManager) {
+	public TokenAuthenticationFilter(AuthenticationManager authenticationManager) {
 		super();
 		this.authenticationManager = authenticationManager;
 	}
@@ -62,7 +62,7 @@ public class IAFTokenAuthenticationFilter extends GenericFilterBean {
 		
 		if (auth == null || !auth.isAuthenticated()) {
 			if (userCookie != null) {
-				IAFAuthenticationToken authRequest = new IAFAuthenticationToken(userCookie.getValue(), null);
+				AuthenticationToken authRequest = new AuthenticationToken(userCookie.getValue(), null);
 				Authentication authResult = authenticationManager.authenticate(authRequest);
 				
 				SecurityContextHolder.getContext().setAuthentication(authResult);
